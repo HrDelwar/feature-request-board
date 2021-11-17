@@ -1,0 +1,15 @@
+{
+    "name": "hrdelwar/feature-request-board",
+    "autoload": {
+        "psr-4": {
+            "Hr\\WpFRB\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Habibur Rahman Delwar",
+            "email": "hrdelwar75@gmail.com"
+        }
+    ],
+    "require": {}
+}

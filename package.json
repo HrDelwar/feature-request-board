@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "porduction": "mix --production"
+  },
+  "dependencies": {
+    "@element-plus/icons": "^0.0.11",
+    "element-plus": "^1.1.0-beta.24",
+    "jquery": "^3.6.0",
+    "vue": "^3.2.22",
+    "vue-router": "^4.0.12"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.2.22",
+    "cross-env": "^7.0.3",
+    "laravel-mix": "^6.0.39",
+    "vue-loader": "^16.8.2"
+  }
+}
