@@ -1,3 +1,209 @@
-h1{
-    font-size: 20px;
+
+.wpfrb {
+    background: #fff;
+    padding: 10px 15px;
+    color: #5e5b5b;
+    border-radius: 4px;
+}
+
+.wpfrb .btn {
+    padding: 5px 10px;
+    background: #676668;
+    color: white;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+.wpfrb .btn:hover {
+    background: #4d4d4d;
+    padding: 5px 10px;
+    color: white;
+    border-color: transparent;
+}
+
+.wpfrb h1 {
+    font-size: 23px;
+    color: gray;
+}
+
+.wpfrb .flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.wpfrb .justify-between {
+    justify-content: space-between;
+}
+
+.wpfrb .items-center {
+    align-items: center;
+}
+
+.wpfrb h1::before {
+    content: '' !important;
+    display: none !important;
+    background: transparent !important;
+}
+
+/*popup wraper*/
+.wpfrb .wpfrb-popup-overlay {
+    position: fixed;
+    background: #0000009c;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+.wpfrb .wpfrb-popup-overlay.wpfrb-login-register{
+    display: none;
+}
+.wpfrb .wpfrb-popup-overlay.wpfrb-login-register.show{
+    display: flex;
+}
+
+.wpfrb .btn.simple {
+    background: transparent !important;
+    color: #686868 !important;
+    padding: 5px 0px;
+}
+
+.wpfrb .btn.simple:hover {
+    text-decoration: underline;
+    color: #05ceb2 !important;
+}
+.wpfrb .overlay-close {
+    padding: 1px 7px;
+    border-radius: 50%;
+    border: 0;
+    background: #f04242 !important;
+    font-size: 16px;
+    margin-left: auto;
+    display: block;
+    font-weight: bold;
+    color: white !important;
+}
+
+/*popup content*/
+.wpfrb .wpfrb-popup-content {
+    min-width: 250px;
+    background: white;
+    padding: 10px 20px;
+    min-height: 100px;
+    border-radius: 5px;
+    box-shadow: 3px 4px 8px #b9b9b2;
+    z-index: 999;
+}
+
+/*login register */
+.wpfrb-login-register .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wpfrb-login-register .btn {
+    border-radius: 0;
+    margin-left: 1px;
+    background: #3f4242 !important;
+}
+
+.wpfrb-login-register .wpfrb-login-register-body {
+    margin-top: 16px;
+}
+
+.wpfrb-login-register .wpfrb-login-register-body h2 {
+    font-size: 35px;
+}
+
+.wpfrb-login-register .wpfrb-login-register-body .input-group {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.wpfrb .tab.btn{
+    background: transparent !important;
+    border: 1px solid #6c6464;
+    color: #666060 !important;
+}
+.wpfrb .tab.btn:hover{
+    background: #464646 !important;
+    color: white !important;
+}
+
+.wpfrb .tab.btn.active{
+    background: #464646 !important;
+    color: white !important;
+}
+
+.wpfrb-login-register .wpfrb-login-register-body .input-group + .input-group {
+    margin-top: 15px;
+}
+
+.wpfrb-login-register .wpfrb-login-register .btn.login.submit {
+}
+
+.wpfrb-login-register-body .active-form {
+    display: block;
+}
+.wpfrb-login-register-body form {
+    display: none;
+}
+
+.wpfrb-login-register .wpfrb-login-register-body .input-group .label-text {
+    margin: 0;
+    color: gray;
+    font-size: 18px;
+}
+
+.wpfrb-login-register .wpfrb-login-register-body .input-group .form-control {
+    border: 1px solid #b7aeae;
+    border-radius: 4px;
+    color: gray;
+    padding: 5px 10px;
+    font-size: 17px;
+}
+
+/*global class*/
+.wpfrb * {
+    box-sizing: border-box;
+}
+
+.wpfrb *:focus {
+    outline: none !important;
+}
+
+.fade-in {
+    animation: fade_in .5s linear;
+}
+
+.fade-out {
+    animation: fade_out .5s linear;
+}
+
+
+/*animation keyframes*/
+/*fade in*/
+@keyframes fade_in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/*fade out*/
+@keyframes fade_out {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

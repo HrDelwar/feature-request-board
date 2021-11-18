@@ -15,10 +15,6 @@
     </div>
   </div>
 
-  <div class="">
-    <h1>Element</h1>
-    <el-button type="primary">Primary</el-button>
-  </div>
 </template>
 
 <script>

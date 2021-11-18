@@ -14,9 +14,17 @@ class Assets
     {
         if (is_admin()) {
             $this->register_scripts($this->get_admin_scripts());
+            wp_localize_script('wpfrb_admin_script','ajax_obj',array(
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                'nonce' => wp_create_nonce(WPFRB_NONCE)
+            ));
         } else {
             $this->register_scripts($this->get_frontend_scripts());
             $this->register_styles($this->get_frontend_styles());
+            wp_localize_script('wpfrb_frontend_script','ajax_obj',array(
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                'nonce' => wp_create_nonce(WPFRB_NONCE)
+            ));
         }
     }
 
@@ -27,7 +35,6 @@ class Assets
             $in_footer = $script['in_footer'] ?? false;
             $version = $script['version'] ?? WPFRB_VERSION;
             wp_enqueue_script($handle, $script['src'], $deps, $version, $in_footer);
-
         }
     }
 

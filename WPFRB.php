@@ -55,6 +55,7 @@ class WPFRB
         define('WPFRB_PLUGIN_PATH', __FILE__);
         define('WPFRB_PLUGIN_URL', trailingslashit(plugin_dir_url(__FILE__)));
         define('WPFRB_ASSETS', WPFRB_PLUGIN_URL . 'assets');
+        define('WPFRB_NONCE', 'wpfrb54321');
     }
 
     /**
@@ -100,6 +101,7 @@ class WPFRB
             new \Hr\WpFRB\Hooks\Admin();
         }
         new \Hr\WpFRB\Hooks\Assets();
+        new \Hr\WpFRB\Router\Router();
         new \Hr\WpFRB\Hooks\Shortcode();
     }
 }
