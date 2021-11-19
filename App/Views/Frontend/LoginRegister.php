@@ -22,7 +22,7 @@ class LoginRegister
                     //login form
                         $c.='<form class="active-form" id="wpfrb-login-form">';
                             $c.='<h2>'.esc_html__('Login', 'wpfrb').'</h2>';
-                            $c.='<p class="wpfrb-msg-status"></p>';
+                            $c.='<p class="wpfrb-from-msg-status login"></p>';
                             $c.='<div class="input-group">';
                                 $c.='<label class="label-text" for="username">'.
                                    esc_html__('Username', 'wpfrb').
@@ -31,7 +31,7 @@ class LoginRegister
                                     class="form-control"
                                     id="username"
                                     type="text"
-                                    name="name"
+                                    name="username"
                                     placeholder="'.esc_attr__('username', 'wpfrb').'">';
                             $c.='</div>';
                             $c.='<div class="input-group">';
@@ -55,7 +55,7 @@ class LoginRegister
                         // register form
                         $c.='<form class="" id="wpfrb-register-form">';
                             $c.='<h2>'.esc_html__('Register', 'wpfrb').'</h2>';
-                            $c.='<p class="wpfrb-msg-status"></p>';
+                            $c.='<p class="wpfrb-from-msg-status register"></p>';
                             $c.='<div class="input-group">';
                             $c.='<label class="label-text" for="display_name">'.
                                 esc_html__('Display Name', 'wpfrb').
@@ -73,7 +73,7 @@ class LoginRegister
                                 $c.='<input      class="form-control"
                                                             id="username"
                                                             type="text"
-                                                            name="name"
+                                                            name="username"
                                                                 placeholder="'.esc_attr__('username', 'wpfrb').'">';
                             $c.='</div>';
                             $c.='<div class="input-group">';

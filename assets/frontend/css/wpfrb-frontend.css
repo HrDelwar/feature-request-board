@@ -105,11 +105,17 @@
     justify-content: center;
     align-items: center;
 }
-
+.wpfrb-from-msg-status {
+    color: green;
+    font-size: 18px;
+}
 .wpfrb-login-register .btn {
     border-radius: 0;
     margin-left: 1px;
     background: #3f4242 !important;
+}
+#wpfrb-register-form input.form-control.error, #wpfrb-login-form input.form-control.error {
+    border: 1px solid red !important;
 }
 
 .wpfrb-login-register .wpfrb-login-register-body {

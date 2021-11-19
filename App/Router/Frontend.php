@@ -15,5 +15,6 @@ class Frontend
 
     public function wpfrb_routes(){
         add_action('wp_ajax_nopriv_wpfrb_user_register', [$this->user, 'wpfrb_user_register']);
+        add_action('wp_ajax_nopriv_wpfrb_user_login', [$this->user, 'wpfrb_user_login']);
     }
 }
