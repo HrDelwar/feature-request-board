@@ -22,11 +22,22 @@
             $('.tab.btn.register').removeClass('active')
             $('.tab.btn.login').addClass('active')
             $('#wpfrb-login-form').addClass('active-form');
+            
+            const registerFormInputs = $('#wpfrb-register-form input');
+            if(registerFormInputs.next('p').length){
+                registerFormInputs.removeClass('error');
+                registerFormInputs.next('p').remove();
+            }
         } else {
             $('#wpfrb-login-form').removeClass('active-form');
             $('.tab.btn.login').removeClass('active')
             $('.tab.btn.register').addClass('active')
             $('#wpfrb-register-form').addClass('active-form');
+            const loginFromInputs = $('#wpfrb-login-form input');
+            if(loginFromInputs.next('p').length){
+                loginFromInputs.removeClass('error')
+                loginFromInputs.next('p').remove();
+            }
         }
     }
 

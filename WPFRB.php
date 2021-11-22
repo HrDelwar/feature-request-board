@@ -22,6 +22,7 @@
  * Domain Path:       /languages
  */
 
+
 if (!defined('ABSPATH')) {
     die;
 }
@@ -34,7 +35,6 @@ class WPFRB
      * Define Plugin Version
      */
     const VERSION = '1.0.0';
-
     // constructor
     public function __construct()
     {
@@ -56,6 +56,8 @@ class WPFRB
         define('WPFRB_PLUGIN_URL', trailingslashit(plugin_dir_url(__FILE__)));
         define('WPFRB_ASSETS', WPFRB_PLUGIN_URL . 'assets');
         define('WPFRB_NONCE', 'wpfrb54321');
+        define('WPFRB_frb_board', 'wpfrb_frb_board');
+        define('WPFRB_frb_request_list', 'wpfrb_frb_request_list');
     }
 
     /**
@@ -77,7 +79,13 @@ class WPFRB
      */
     public function activate()
     {
-
+        $installed = get_option( 'wpfrb_installed' );
+        if ( ! $installed ) {
+            update_option( 'wpfrb_installed', time() );
+        }
+        update_option( 'wpfrb_version',  WPFRB_VERSION);
+        $tables = new \Hr\WpFRB\Hooks\Tables();
+        $tables->wpfrb_create_tables();
     }
 
 
@@ -96,7 +104,6 @@ class WPFRB
      */
     public function init()
     {
-
         if (is_admin()) {
             new \Hr\WpFRB\Hooks\Admin();
         }

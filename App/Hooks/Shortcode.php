@@ -10,12 +10,19 @@ class Shortcode
 
     public function __construct()
     {
-        add_shortcode('wpfrb-feature-request-board', [$this, 'wpfrb_feature_request_board']);
+        add_shortcode('wpfrb-board', [$this, 'wpfrb_feature_request_board']);
         $this->register_form = new LoginRegister();
     }
 
-    public function wpfrb_feature_request_board($attr = [], $c = '', $tag = ''): string
+    public function wpfrb_feature_request_board($atts = [], $c = '', $tag = ''): string
     {
+        global $wpdb;
+        $atts = array_change_key_case((array) $atts, CASE_LOWER);
+        $wpfrb_atts = shortcode_atts( 
+            array(
+                'id'    => ''
+            ), $atts
+        );
         // header section
         $c .= '<div class="wpfrb">';
             $c .= '<div class="flex justify-between items-center">';
@@ -32,7 +39,7 @@ class Shortcode
                     }
                 $c.="</div>";
             $c .= "</div>";
-        $c .= $this->register_form->wpfrb_register_form_view();
+            $c .= $this->register_form->wpfrb_register_form_view();
         $c .= "</div>";
 
         return $c;
