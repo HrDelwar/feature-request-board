@@ -6,7 +6,9 @@ class Router
 {
     public function __construct()
     {
-        new Admin();
+        if(is_admin()){
+            new Admin();
+        }
         new Frontend();
     }
 }

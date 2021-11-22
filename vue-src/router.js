@@ -1,8 +1,9 @@
-import Shortcode from "./Components/Shortcode";
+import FeatureBoard from "./Components/FeatureBoard";
 import {createRouter, createWebHashHistory} from "vue-router";
 
 const router = [
-    {path: '/', name: 'shortcode', component: Shortcode},
+    {path: '/', name: 'shortcode', component: FeatureBoard},
+    {path: '/feature-board', name: 'featureBaord', component: FeatureBoard},
 ]
 
 export default createRouter({
