@@ -56,8 +56,11 @@ class WPFRB
         define('WPFRB_PLUGIN_URL', trailingslashit(plugin_dir_url(__FILE__)));
         define('WPFRB_ASSETS', WPFRB_PLUGIN_URL . 'assets');
         define('WPFRB_NONCE', 'wpfrb54321');
-        define('WPFRB_frb_board', 'wpfrb_frb_board');
-        define('WPFRB_frb_request_list', 'wpfrb_frb_request_list');
+        define('WPFRB_frb_board', 'wpfrb_frb_boards');
+        define('WPFRB_frb_request_list', 'wpfrb_frb_request_lists');
+        define('WPFRB_request_comments', 'wpfrb_request_comments');
+        define('WPFRB_request_votes', 'wpfrb_request_votes');
+        define('WPFRB_request_comment_reply', 'wpfrb_request_comment_replys');
     }
 
     /**
