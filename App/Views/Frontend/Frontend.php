@@ -2,7 +2,7 @@
 
 namespace Hr\WpFRB\Views\Frontend;
 
-class LoginRegister
+class Frontend
 {
     public function wpfrb_register_form_view(): string
     {
@@ -108,6 +108,28 @@ class LoginRegister
                 $c.='</div>';
             $c.='</div>';
         $c .= '</div>';
+        return $c;
+    }
+
+    public function wpfrb_request_form_view($board):string
+    {
+        $c=null;
+        $c.='<form id="wpfrb-add-feature-req-form">';
+            $c .= '<h2>'.esc_html__('Suggest new feature', 'wpfrb').'</h2>';
+            $c .= '<div class="input-group">';
+                $c .= '<input type="text" name="title" placeholder="'.esc_attr__('Title', 'wpfrb').'" >';
+            $c .= '</div>';
+            $c .= '<div class="input-group">';
+                $c .= '<textarea rows="9" name="description" id="description" placeholder="'.esc_html__('Why do you want this', 'wpfrb').'" ></textarea>';
+            $c .= '</div>';
+            $c .= '<div class="input-group">';
+                $c .= '<button type="submit" class="btn">';
+                    $c .= '<span class="loader"></span>'.esc_html__('Suggest Feature', 'fluent-features-board');
+                $c .= '</button>';
+            $c .= '</div>';
+            $c .= '<input type="hidden" value="'.esc_attr($board->id).'" id="parent_board_id" />';
+        $c.='</form>';
+
         return $c;
     }
 }

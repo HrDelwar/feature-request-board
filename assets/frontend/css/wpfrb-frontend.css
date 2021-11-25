@@ -173,6 +173,11 @@
 }
 
 /* header section */
+.wpfrb header{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ffd70061;
+}
+
 .wpfrb  .header-right .user-login {
     text-decoration: none;
     font-size: 15px;
@@ -196,10 +201,42 @@
     padding: 0;
 }
 
-.wpfrb  .header-right  .user-logout-dropdown a:hover,
-.wpfrb  .header-right  .user-login:hover {
-    color: #ba42ec;
-    background: #f8e8ff;
+.wpfrb .header-right .user-logout-dropdown a:hover, .wpfrb .header-right .user-login:hover {
+	color: #e8a300;
+	background: #fff2c1;
+}
+
+.user-icon::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	position: absolute;
+	top: -5px;
+	left: -5px;
+	border: 1px solid #aaa;
+	border-radius: 50%;
+	transition: .3s;
+}
+.logout-power-icon::before {
+	content: '';
+	position: absolute;
+	width: 1px;
+	height: 8px;
+	background: #cfcfcf;
+	left: 50%;
+	top: -4px;
+	margin-left: -.5px;
+	box-shadow: 0 0 0 3px #fff;
+	transition: .3s;
+}
+
+.wpfrb .header-right .user-logout-dropdown a:hover .user-icon::before, .wpfrb .header-right .user-logout-dropdown a:hover .logout-power-icon {
+	border: 1px solid #e8a300 !important;
+}
+
+.wpfrb .header-right .user-logout-dropdown a:hover .logout-power-icon::before {
+	background: #e8a300;
+    box-shadow: 0 0 0 3px #fff2c1;
 }
 
 .wpfrb  .header-right  .user-logout {
@@ -283,21 +320,101 @@
     transition: .3s;
 }
 
-.wpfrb .header-right  .user-logout-dropdown a:hover .user-icon {
-    border-top-color: #ba42ec;
-    border-left-color: #ba42ec;
+.wpfrb .header-right .user-logout-dropdown a:hover .user-icon {
+	border-top-color: #e8a300;
+	border-left-color: #e8a300;
 }
 
-.wpfrb .header-right:hover .user-logout-dropdown{
+/* .wpfrb .header-right:hover .user-logout-dropdown{
     display: block;
+} */
+
+
+/* feature section */
+.wpfrb .frb-req-header{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.wpfrb .frb-req-add-button{
+    background: #fdd8108f !important;
+    border: 0 !important;
+    border-radius: 5px;
+    color: #464242 !important;
+    width: max-content;
+    height: max-content !important;
+    line-height: 1;
+    padding: 7px 12px;
+    font-size: 18px;
+}
+.wpfrb .frb-req-add-button:hover {
+    color: white !important;
+    background: goldenrod !important;
+}
+.wpfrb .frb-req-header .frb-req-search-input {
+	border: 1px solid #fdd81070 !important;
 }
 
+/* req form area */
+.wpfrb .frb-req-form-area {
+	border: 1px solid #fdd81070;
+	padding: 10px 20px;
+	margin-top: 20px;
+	border-radius: 5px;
+}
+.wpfrb .frb-req-not-login-section {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	font-size: 16px;
+	align-items: center;
+}
 
-
+.wpfrb .frb-req-form-area .btn.simple.login.menu {
+	text-decoration: underline;
+}
 /*global class*/
 .wpfrb * {
     box-sizing: border-box;
     text-decoration: none;
+}
+.wpfrb h2{
+    font-size: 20px !important;
+    line-height: 1.5;
+}
+.wpfrb form h2{
+    margin: 10px 0;
+}
+.wpfrb input[type="text"], .wpfrb textarea {
+	border: 1px solid #fdd81070;
+	border-radius: 5px;
+	height: max-content;
+	width: max-content;
+	padding: 3px 5px;
+	font-size: 16px;
+	color: gray !important;
+	line-height: 1;
+	margin: 0;
+	max-width: 100%;
+}
+.wpfrb .input-group input[type="text"], .wpfrb .input-group textarea {
+    width: 100%;
+    margin-bottom: 15px;
+}
+.wpfrb input[type='text']:focus, .wpfrb .input-group textarea:focus{
+    border-color: goldenrod !important;
+}
+.wpfrb .input-group .btn{
+    height: max-content;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 3px 5px 1px 5px;
+    background: gold !important;
+    color: rebeccapurple !important;
+}
+.wpfrb .input-group .btn:hover{
+    background: goldenrod !important;
+    color: white !important;
 }
 .text-2xl{
     font-size: 1.5rem !important;

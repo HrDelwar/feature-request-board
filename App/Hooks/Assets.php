@@ -7,7 +7,7 @@ class Assets
     public function __construct()
     {
         add_action('admin_enqueue_scripts', [$this, 'register']);
-        add_action('wp_enqueue_scripts', [$this, 'register']);
+        add_action('wp_enqueue_scripts', [$this, 'register'], 999);
     }
 
     public function register()

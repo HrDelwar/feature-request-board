@@ -131,4 +131,20 @@
             })
         }
     })
+
+    // hover profile log handle
+    $('.wpfrb .header-right').hover(function(){
+     $('.wpfrb .header-right .user-logout-dropdown').show()
+    },function(){
+        $('.wpfrb .header-right .user-logout-dropdown').hide()
+    })
+    $('.wpfrb .header-right').click(function(){
+        $('.wpfrb .header-right .user-logout-dropdown').toggle()
+    })
+    // handle feature req form show hide
+    $('.frb-req-add-button').click(function(){
+        $('.frb-req-form-area').animate({
+            height: 'toggle'
+          });
+    })
 })(jQuery)

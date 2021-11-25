@@ -2,16 +2,16 @@
 
 namespace Hr\WpFRB\Hooks;
 
-use \Hr\WpFRB\Views\Frontend\LoginRegister;
+use \Hr\WpFRB\Views\Frontend\Frontend;
 
 class Shortcode
 {
-    protected $register_form;
+    protected $frontend;
 
     public function __construct()
     {
         add_shortcode('wpfrb-board', [$this, 'wpfrb_feature_request_board']);
-        $this->register_form = new LoginRegister();
+        $this->frontend = new Frontend();
     }
 
     public function wpfrb_feature_request_board($atts = [], $c = '', $tag = ''): string
@@ -28,9 +28,9 @@ class Shortcode
             $board = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix.WPFRB_frb_board." WHERE id=".$wpfrb_atts['id']);
             global $current_user;
             global $wp;
+            $c .= '<div class="wpfrb">';
                 // header section
-                $c .= '<div class="wpfrb">';
-                $c .= '<div class="flex justify-between items-center">';
+                $c .= '<header class="flex justify-between items-center">';
                     $c .= '<div class="header-left">';
                         if(!empty($board->logo)) {
                             $c .= '<img src="'.$board->logo.'" alt="">';
@@ -54,7 +54,7 @@ class Shortcode
                                     $c.='</div>';
                                 } else {
                                     $c .= '<li class="user-logout user-out">';
-                                        $c .= '<a href="">';
+                                        $c .= '<a>';
                                             $c .= '<img width="32" height="32" src="'.get_avatar_url($current_user->ID).'"/> '.esc_html__('Hi, ', 'fluent-features-board').esc_html($current_user->display_name).' <span class="downicon"></span>';
                                         $c .= '</a>';
                                         $c .= '<div class="user-logout-dropdown">';
@@ -68,17 +68,31 @@ class Shortcode
                             $c .= '</ul>';
                         $c .= '</div>';
                     $c.="</div>";
-                $c .= "</div>";
+                $c .= "</header>";
+                
+                // request feature section
+                $c.='<section class="wpfrb-feature-section">';
+                    $c.='<div class="frb-req-header">';
+                        $c.='<button class="frb-req-add-button">'.esc_html__('New Feature Request','wpfrb').'</button>';
+                        $c.='<input type="text"  name="frb_req_search_input" placeholder="'.esc_attr__('Search feature..','wpfrb').'" class="frb-req-search-input">';
+                    $c.='</div>';
+                    
+                    // form section
+                    $c.='<div id="frb-req-form-area" class="frb-req-form-area" style="display:none;">';
+                        if(!is_user_logged_in()){
+                            $c.='<div class="frb-req-not-login-section">';
+                                $c.='<span>'.esc_html__('First Login to request feature.','wpfrb').'</span>';
+                                $c.='<button class="btn simple login menu">'.esc_html('Login', 'wpfrb').'</button>';
+                            $c.='</div>';
+                        }else{
+                            $c.=$this->frontend->wpfrb_request_form_view($board);
+                        }
+                    $c.='</div>';
+                $c.="</section>";
 
-
-                $c .= '<header>';
-                    $c .= '<div class="ffr-wrap">';
-                        
-                       
-                    $c .= '</div>';
-                $c .= '</header>';
-            $c .= $this->register_form->wpfrb_register_form_view();
-        $c .= "</div>";
+                // login register form
+                $c .= $this->frontend->wpfrb_register_form_view();
+            $c .= "</div>";
         }
         return $c;
     }
