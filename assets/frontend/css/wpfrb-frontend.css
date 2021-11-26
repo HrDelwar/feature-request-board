@@ -439,6 +439,12 @@
 	margin: 0;
 	max-width: 100%;
 }
+
+.wpfrb input[type="text"].error, .wpfrb textarea.error {
+	border: 1px solid red !important;
+}
+
+
 .wpfrb .input-group input[type="text"], .wpfrb .input-group textarea {
     width: 100%;
     margin-bottom: 15px;

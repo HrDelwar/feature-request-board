@@ -2,7 +2,7 @@
 
 namespace Hr\WpFRB\Models;
 
-class FeatureBoardModel
+class FeatureListModel
 {
     protected $_wpdb;
     protected $table;
@@ -10,9 +10,9 @@ class FeatureBoardModel
     {
         global $wpdb;
         $this->_wpdb = $wpdb;
-        $this->table= $wpdb->prefix.WPFRB_frb_board;
+        $this->table= $wpdb->prefix.WPFRB_frb_request_list;
     }
-    public function wpfrb_insert_feature_board($data)
+    public function wpfrb_add_feature_req($data)
     {
         $result =  $this->_wpdb->insert($this->table,$data);
         if($result){
@@ -21,10 +21,10 @@ class FeatureBoardModel
             return false;
         }
     }
-    public function wpfrb_get_feature_board_by_id($id){
+    public function wpfrb_get_feature_req_by_id($id){
         return $this->_wpdb->get_row("SELECT * FROM $this->table WHERE id=$id");
     }
-    public function wpfrb_get_all_board(){
-        return $this->_wpdb->get_results("SELECT * FROM $this->table",ARRAY_A);
+    public function wpfrb_get_all_feature_req(){
+        return $this->_wpdb->get_results("SELECT * FROM $this->table", ARRAY_A);
     }
 }

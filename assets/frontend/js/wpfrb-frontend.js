@@ -150,7 +150,6 @@
     })
 
     // handle feature req form logo
-    let req_logo = "";
     $(".wpfrb .frb-req-selcet-logo").on("change", function(e) {
 
         if (window.File && window.FileList && window.FileReader) {
@@ -164,10 +163,9 @@
                         "<img class=\"logo\" src=\"" + e.target.result + "\" title=\"" + e.target.name + "\"/>" +
                         "<span class=\"remove-preview-logo\">+</span>" +
                         "</div>");
-                    req_logo = e.target.result;
                     $(".remove-preview-logo").click(function(e){
                         $(this).parent(".logo-preview").remove();
-                        req_logo = "";
+                        $('.wpfrb .frb-req-selcet-logo').val('');
                     });
                 });
                 reader.readAsDataURL(file);
@@ -180,11 +178,42 @@
     // handle feature req form submit 
     $(document).on('submit','form#wpfrb-add-feature-req-form', function(e){
         e.preventDefault();
-        const data = $(this).serializeArray().reduce((obj, item) => {
-            obj[item.name] = item.value;
-            return obj
-        }, {});
-        
+        let form_data = new FormData($(this)[0]);
+        form_data.append('action','wpfrb_add_feature');
+        form_data.append('nonce',ajax_obj.nonce)
+       
+        $.ajax({
+            type: 'POST',
+            url: ajax_obj.ajaxurl,
+            data:form_data,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            success(res) {
+                if (res.success) {
+                    $('#wpfrb-add-feature-req-form').trigger("reset");
+                    $('.wpfrb .frb-req-selcet-logo').val('');
+                    $("#wpfrb-add-feature-req-form .logo-preview").remove();
+                    $(`#wpfrb-add-feature-req-form input, #wpfrb-add-feature-req-form textarea`).removeClass('error');
+                    $(`#wpfrb-add-feature-req-form input + p, #wpfrb-add-feature-req-form textarea + p`).remove();
+                    $('.wpfrb-from-msg-status.feature-req').text('Request add successful....!'); 
+                    // setTimeout(() => {
+                    //     location.reload();
+                    // },1500)
+                }
+            },
+            error({responseJSON: {data}}, _, err) {
+                const errors = data;
+                $(`#wpfrb-add-feature-req-form input, #wpfrb-add-feature-req-form textarea`).removeClass('error');
+                $(`#wpfrb-add-feature-req-form input + p, #wpfrb-add-feature-req-form textarea + p`).remove();
+                for (const err in errors) {
+                    const element = err === 'description' ? $(`#wpfrb-add-feature-req-form textarea[name=${err}]`) : $(`#wpfrb-add-feature-req-form input[name=${err}]`);
+                    $(`#wpfrb-add-feature-req-form input[name=${err}] + p, #wpfrb-add-feature-req-form textarea[name=${err}] + p`).remove();
+                    element.addClass('error')
+                    element.after(`<p style="color: red; font-size: small;margin-top:-16px; margin-bottom:12px;">${errors[err]}</p>`);
+                }
+            }
+        })
     })
 
 })(jQuery)

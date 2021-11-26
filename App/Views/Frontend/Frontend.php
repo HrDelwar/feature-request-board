@@ -116,6 +116,7 @@ class Frontend
         $c=null;
         $c.='<form id="wpfrb-add-feature-req-form" enctype="multipart/form-data">';
             $c.= '<h2>'.esc_html__('Suggest new feature', 'wpfrb').'</h2>';
+            $c.='<p class="wpfrb-from-msg-status feature-req"></p>';
             $c.= '<div class="input-group">';
                 $c.= '<input type="text" name="title" placeholder="'.esc_attr__('Title', 'wpfrb').'" >';
             $c.= '</div>';
@@ -131,12 +132,12 @@ class Frontend
                     $c.='<input class="frb-req-selcet-logo" name="logo" class="logourlinput" type="file">';
                 $c.='</div>';
             $c.='</div>';
+            $c.= '<input type="hidden" name="board" value="'.esc_attr($board->id).'" id="parent_board_id" />';
             $c.= '<div class="input-group">';
                 $c.= '<button type="submit" class="btn">';
                     $c.= '<span class="loader"></span>'.esc_html__('Suggest Feature', 'fluent-features-board');
                 $c.= '</button>';
             $c.= '</div>';
-            $c.= '<input type="hidden" value="'.esc_attr($board->id).'" id="parent_board_id" />';
         $c.='</form>';
 
         return $c;

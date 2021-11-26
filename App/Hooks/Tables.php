@@ -24,7 +24,7 @@ class Tables
     ) $charset_collate;";
 
     // feature requests table 
-    $wpfrb_request_list_table = $wpdb->prifix.WPFRB_frb_request_list;
+    $wpfrb_request_list_table = $wpdb->prefix. WPFRB_frb_request_list;
     $sql_wpfrb_request_list ="CREATE TABLE IF NOT EXISTS $wpfrb_request_list_table (
       id INT NOT NULL AUTO_INCREMENT,
       author BIGINT(20) unsigned,
@@ -39,7 +39,7 @@ class Tables
     ) $charset_collate";
 
     // request comment table
-    $wpfrb_request_comment_table = $wpdb->prifix.WPFRB_request_comments;
+    $wpfrb_request_comment_table = $wpdb->prefix. WPFRB_request_comments;
     $sql_request_comment ="CREATE TABLE IF NOT EXISTS $wpfrb_request_comment_table (
       id INT NOT NULL AUTO_INCREMENT,
       user BIGINT(20) unsigned,
@@ -51,7 +51,7 @@ class Tables
     ) $charset_collate";
 
     // request votes table
-    $wpfrb_request_votes_table = $wpdb->prifix.WPFRB_request_votes;
+    $wpfrb_request_votes_table = $wpdb->prefix. WPFRB_request_votes;
     $sql_request_votes ="CREATE TABLE IF NOT EXISTS $wpfrb_request_votes_table (
       id INT NOT NULL AUTO_INCREMENT,
       user BIGINT(20) unsigned,
@@ -62,7 +62,7 @@ class Tables
     ) $charset_collate";
 
      // comments reply  table
-     $wpfrb_request_commetn_reply_table = $wpdb->prifix.WPFRB_request_comment_reply;
+     $wpfrb_request_commetn_reply_table = $wpdb->prefix. WPFRB_request_comment_reply;
      $sql_request_comment_reply ="CREATE TABLE IF NOT EXISTS $wpfrb_request_commetn_reply_table (
        id INT NOT NULL AUTO_INCREMENT,
        user BIGINT(20) unsigned,
