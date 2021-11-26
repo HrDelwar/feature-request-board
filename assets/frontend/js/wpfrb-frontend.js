@@ -197,9 +197,9 @@
                     $(`#wpfrb-add-feature-req-form input, #wpfrb-add-feature-req-form textarea`).removeClass('error');
                     $(`#wpfrb-add-feature-req-form input + p, #wpfrb-add-feature-req-form textarea + p`).remove();
                     $('.wpfrb-from-msg-status.feature-req').text('Request add successful....!'); 
-                    // setTimeout(() => {
-                    //     location.reload();
-                    // },1500)
+                    setTimeout(() => {
+                        location.reload();
+                    },1500)
                 }
             },
             error({responseJSON: {data}}, _, err) {
