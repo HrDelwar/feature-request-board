@@ -25,9 +25,32 @@ class Shortcode
         );
 
         if(!empty($wpfrb_atts['id'])){
+
+
+
             $board = $wpdb->get_row("SELECT * FROM ".$wpdb->prefix.WPFRB_frb_board." WHERE id=".$wpfrb_atts['id']);
             global $current_user;
             global $wp;
+            
+            // sort by request
+            if ($board->sort_by == 'alphabetical') {
+                $sort_by = ' ORDER BY title';
+            } else {
+                $sort_by = '';
+            }
+
+            // all reuest for admin
+            if(is_user_logged_in() && $current_user->roles[0] == 'administrator') {
+                $show_all_requests = "";
+            } else {
+                $show_all_requests = " and status='public' ";
+            }
+
+            $all_req = $wpdb->get_results(
+                "SELECT * FROM ".$wpdb->prefix.WPFRB_frb_request_list." WHERE board_id=".$wpfrb_atts['id'].$show_all_requests.$sort_by
+            );
+
+
             $c .= '<div class="wpfrb">';
                 // header section
                 $c .= '<header class="flex justify-between items-center">';
@@ -55,12 +78,12 @@ class Shortcode
                                 } else {
                                     $c .= '<li class="user-logout user-out">';
                                         $c .= '<a>';
-                                            $c .= '<img width="32" height="32" src="'.get_avatar_url($current_user->ID).'"/> '.esc_html__('Hi, ', 'fluent-features-board').esc_html($current_user->display_name).' <span class="downicon"></span>';
+                                            $c .= '<img width="32" height="32" src="'.get_avatar_url($current_user->ID).'"/> '.esc_html__('Hi, ', 'wpfrb').esc_html($current_user->display_name).' <span class="downicon"></span>';
                                         $c .= '</a>';
                                         $c .= '<div class="user-logout-dropdown">';
-                                            $c .= '<a href="'.site_url( ).'/wp-admin/profile.php"><span class="user-icon"></span>'.esc_html__('Profile ', 'fluent-features-board').'</a>';
+                                            $c .= '<a href="'.site_url( ).'/wp-admin/profile.php"><span class="user-icon"></span>'.esc_html__('Profile ', 'wpfrb').'</a>';
                                             $c .= '<a class="user-logout" href="'.wp_logout_url( add_query_arg( $wp->query_vars, home_url( $wp->request ) ) ).'">';
-                                                $c .= '<span class="logout-power-icon"></span> '.esc_html__('Logout', 'fluent-features-board');
+                                                $c .= '<span class="logout-power-icon"></span> '.esc_html__('Logout', 'wpfrb');
                                             $c .= '</a>';
                                         $c .= '</div>';
                                     $c .= '</li>';
@@ -89,6 +112,40 @@ class Shortcode
                         }
                     $c.='</div>';
                 $c.="</section>";
+
+                // feature request filter section
+                $c.='<div class="frb-req-filter-area">';
+                    $c .= '<p>('.count($all_req).') '.esc_html__('feature requests', 'wpfrb').'</p> ';
+                    $c .= '<div class="right">';
+                        $c .= '<p>'.esc_html__('Sort By:', 'wpfrb').'</p>';
+                        $c .= '<select data-id="'.esc_attr($board->id).'">';
+                            if($board->sort_by === 'upvotes') {
+                                $selected_vote = __('selected', 'wpfrb');
+                            } else {
+                                $selected_vote = '';
+                            } 
+                            if ($board->sort_by === 'alphabetical') {
+                                $selected_alph = __('selected', 'wpfrb');
+                            } else {
+                                $selected_alph = '';
+                            } 
+                            if ($board->sort_by === 'comments') {
+                                $selected_cmnt = __('selected', 'wpfrb');
+                            } else {
+                                $selected_cmnt = '';
+                            } 
+                            if ($board->sort_by === 'random') {
+                                $selected_rnmd = __('selected', 'wpfrb');
+                            } else {
+                                $selected_rnmd = '';
+                            }
+                            $c .= '<option '.esc_attr($selected_alph).' value="alphabetical">'.esc_html__( 'Alphabetical', 'wpfrb' ).'</option>';
+                            $c .= '<option '.esc_attr($selected_rnmd).' value="random">'.esc_html__( 'Random', 'wpfrb' ).'</option>';
+                            $c .= '<option '.esc_attr($selected_vote).' value="upvotes">'.esc_html__( 'Number of Upvotes', 'wpfrb' ).'</option>';
+                            $c .= '<option '.esc_attr($selected_cmnt).' value="comments">'.esc_html__( 'Number of Comments', 'wpfrb' ).'</option>';
+                        $c .= '</select>';
+                    $c .= '</div>';
+                $c.='</div>';
 
                 // login register form
                 $c .= $this->frontend->wpfrb_register_form_view();

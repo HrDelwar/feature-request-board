@@ -415,6 +415,26 @@
 }
 
 
+/* feature request filter */
+
+.wpfrb .frb-req-filter-area {
+	display: flex;
+	margin: 17px 0;
+	padding: 0;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.wpfrb .frb-req-filter-area p {
+	font-size: 16px;
+}
+
+.wpfrb .frb-req-filter-area .right {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 /*global class*/
 .wpfrb * {
     box-sizing: border-box;
@@ -438,6 +458,15 @@
 	line-height: 1;
 	margin: 0;
 	max-width: 100%;
+}
+
+select {
+	border: 1px solid #fdd81070;
+	height: max-content;
+	padding: 0px 4px;
+	border-radius: 5px;
+	font-size: 16px;
+	color: gray;
 }
 
 .wpfrb input[type="text"].error, .wpfrb textarea.error {
