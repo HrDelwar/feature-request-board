@@ -141,10 +141,50 @@
     $('.wpfrb .header-right').click(function(){
         $('.wpfrb .header-right .user-logout-dropdown').toggle()
     })
+
     // handle feature req form show hide
     $('.frb-req-add-button').click(function(){
-        $('.frb-req-form-area').animate({
+        $('#frb-req-form-area').animate({
             height: 'toggle'
           });
     })
+
+    // handle feature req form logo
+    let req_logo = "";
+    $(".wpfrb .frb-req-selcet-logo").on("change", function(e) {
+
+        if (window.File && window.FileList && window.FileReader) {
+            
+            let file = e.target.files[0];
+            if(file){
+                $(".wpfrb .logowrap .logo-preview-wraper .logo-preview").remove();
+                let reader = new FileReader();
+                reader.onload = (function(e) {
+                    $(".wpfrb .logowrap .logo-preview-wraper").append("<div class=\"logo-preview\">" +
+                        "<img class=\"logo\" src=\"" + e.target.result + "\" title=\"" + e.target.name + "\"/>" +
+                        "<span class=\"remove-preview-logo\">+</span>" +
+                        "</div>");
+                    req_logo = e.target.result;
+                    $(".remove-preview-logo").click(function(e){
+                        $(this).parent(".logo-preview").remove();
+                        req_logo = "";
+                    });
+                });
+                reader.readAsDataURL(file);
+            }
+        } else {
+          alert("Your browser doesn't support to File API")
+        }
+    });
+
+    // handle feature req form submit 
+    $(document).on('submit','form#wpfrb-add-feature-req-form', function(e){
+        e.preventDefault();
+        const data = $(this).serializeArray().reduce((obj, item) => {
+            obj[item.name] = item.value;
+            return obj
+        }, {});
+        
+    })
+
 })(jQuery)
