@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
     .wpfrb-board-lists {
         margin-top: 30px;
         background: #fff;

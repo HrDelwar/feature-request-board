@@ -23,5 +23,7 @@ class Frontend
         add_action('wp_ajax_nopriv_wpfrb_user_register', [$this->user, 'wpfrb_user_register']);
         add_action('wp_ajax_nopriv_wpfrb_user_login', [$this->user, 'wpfrb_user_login']);
         add_action('wp_ajax_wpfrb_add_feature', [$this->feature_list, 'wpfrb_add_feature']);
+        add_action('wp_ajax_wpfrb_get_all_feature_list', [$this->feature_list, 'wpfrb_get_all_feature_list']);
+        add_action('wp_ajax_wpfrb_all_request_by_board_id', [$this->feature_list, 'wpfrb_all_request_by_board_id']);
     }
 }

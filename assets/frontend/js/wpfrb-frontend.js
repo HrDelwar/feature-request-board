@@ -1,10 +1,11 @@
 (function ($) {
     // login register popup
-    $(document).on('click', '.tab.btn, .btn.menu', function () {
+    $(document).on('click', '.tab.btn, .btn.menu, #wpfrb-login-register-popup', function () {
         $('.wpfrb-from-msg-status').text('');
         if ($(this).hasClass('tab')) {
             loginRegisterTabHandle(this)
-        } else {
+        }
+        else {
             $('.wpfrb-login-register').addClass('show')
             loginRegisterTabHandle(this)
         }
@@ -17,7 +18,7 @@
 
     // handle login register tab
     function loginRegisterTabHandle(that) {
-        if ($(that).hasClass('login')) {
+        if ($(that).hasClass('login') || $(that).prop('id') === 'wpfrb-login-register-popup') {
             $('#wpfrb-register-form').removeClass('active-form');
             $('.tab.btn.register').removeClass('active')
             $('.tab.btn.login').addClass('active')

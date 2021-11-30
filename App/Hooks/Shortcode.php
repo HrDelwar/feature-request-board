@@ -147,6 +147,14 @@ class Shortcode
                     $c .= '</div>';
                 $c.='</div>';
 
+                // feature request items
+
+                $c .= '<div class="wpfrb-requests-list-body">';
+                    foreach($all_req as $item){
+                        $c.= $this->frontend->wpfrb_item_view($board, $item);
+                    }
+                $c.='</div>';
+
                 // login register form
                 $c .= $this->frontend->wpfrb_register_form_view();
             $c .= "</div>";

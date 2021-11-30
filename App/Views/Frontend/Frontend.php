@@ -135,10 +135,86 @@ class Frontend
             $c.= '<input type="hidden" name="board" value="'.esc_attr($board->id).'" id="parent_board_id" />';
             $c.= '<div class="input-group">';
                 $c.= '<button type="submit" class="btn">';
-                    $c.= '<span class="loader"></span>'.esc_html__('Suggest Feature', 'fluent-features-board');
+                    $c.= '<span class="loader"></span>'.esc_html__('Suggest Feature', 'wpfrb');
                 $c.= '</button>';
             $c.= '</div>';
         $c.='</form>';
+
+        return $c;
+    }
+
+    public function wpfrb_item_view($board, $item) : string
+    {
+        global $wpdb;
+        global $current_user;
+        $votes_table = $wpdb->prefix.WPFRB_request_votes;
+
+        if(is_user_logged_in() && $current_user->roles[0] == 'administrator') {
+
+            $is_administrator = 'administrator';
+        } else {
+            $is_administrator = '';
+        }
+
+        $c=null;
+
+        $user_info = get_userdata($item->author);
+        $status = strtolower(str_replace(' ', '-', $item->status));
+        if($item->status == 'inprogress') {
+            $status_text = __("In Progress", "wpfrb");
+        } elseif($item->status == 'planned') {
+            $status_text = __("Planned", "wpfrb");
+        } elseif($item->status == 'closed') {
+            $status_text = __("Closed", "wpfrb");
+        } else {
+            $status_text = __("Shipped", "wpfrb");
+        }
+        if($item->author == $current_user->ID) {
+            $is_current_user_loggedin = __(' active', 'wpfrb');
+        } else {
+            $is_current_user_loggedin = '';
+        }
+
+        $checkUserVoted = $wpdb->get_results("SELECT * FROM $votes_table WHERE request_id=$item->id AND user=$current_user->ID");
+        $c .= '<div class="wpfrb-request-item'.esc_attr($is_current_user_loggedin). ' '.esc_attr($is_administrator).'" data-name="'.esc_attr($item->title).'">';
+
+            if($item->author == $current_user->ID ) {
+                if($current_user->roles[0] == 'subscriber') {
+                    $c .= '<span class="user-action"><a class="edit-feature-request" href="#" data-id="'.esc_attr($item->id).'">'.esc_html__('Edit', 'wpfrb').'</a>|<a id="delete-feature-request" href="#" data-id="'.esc_attr($item->id).'">'.esc_html__('Delete', 'wpfrb').'</a></span>';
+                }
+            }
+
+            if(is_user_logged_in()) {
+                $notLoggedin = ' ';
+                if($checkUserVoted) {
+                    $disabled = __(' removeVote ', 'wpfrb');
+                } else {
+                    $disabled = __(' addVote ', 'wpfrb');
+                }
+            } else {
+                $notLoggedin = ' id="wpfrb-login-register-popup" ';
+                $disabled = '';
+            }
+                $c .= '<div '.$notLoggedin.' class="wpfrb-request-vote '.esc_attr($disabled).'" data-postid="'.esc_attr($item->id).'">';
+                    $c .= '<span class="wpfrb-request-vote-btn"></span>';
+                    
+                    $c .= '<input type="text" value="'.esc_attr('0').'" class="wpfrb-request-vote-count" readonly/>';
+                $c .= '</div>';
+            $c .= '<div class="wpfrb-request-content">';
+                $c .= '<h3>';
+                    $c .= esc_html($item->title);
+                $c .= '</h3>';
+                if($item->status) {
+                    $c .= '<p class="status"><span class="'.esc_attr($status).'">'.esc_html($status_text).'</span></p>';
+                }
+                $c .= '<p class="description">'.esc_html($item->description).'</p>';
+
+            $c .= '</div>';
+            $c .= '<div class="wpfrb-request-comment-count">';
+                $c .= '<span class="comment-icon"></span>';
+                $c .= '<span class="comment-number" data-comments="'.esc_attr('0').'">'.esc_html('0').'</span>';
+            $c .= '</div>';
+        $c .= '</div>';
 
         return $c;
     }

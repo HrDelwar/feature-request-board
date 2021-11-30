@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
     .frb-board-list-row h1 {
         color: #000;
         font-size: 16px;
@@ -114,7 +114,7 @@ export default {
         border-width: 0;
     }
     .ffb-featured-list-table thead {
-        background: linear-gradient(90deg, #ba42ec, #8f42ec);
+         background: linear-gradient(90deg, #636164, #373e28);
     }
     .wpfrb-board-lists table tbody td #frb-shortcode {
         border: none;

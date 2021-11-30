@@ -24,6 +24,10 @@ class FeatureListModel
     public function wpfrb_get_feature_req_by_id($id){
         return $this->_wpdb->get_row("SELECT * FROM $this->table WHERE id=$id");
     }
+
+    public function wpfrb_get_feature_req_by_board_id($id){
+        return $this->_wpdb->get_results("SELECT * FROM $this->table WHERE board_id=$id", ARRAY_A);
+    }
     public function wpfrb_get_all_feature_req(){
         return $this->_wpdb->get_results("SELECT * FROM $this->table", ARRAY_A);
     }
