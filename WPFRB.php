@@ -36,9 +36,12 @@ class WPFRB
      */
     const VERSION = '1.0.0';
     // constructor
+    private $plugin_constants;
+
     public function __construct()
     {
-        $this->plugin_constants();
+        $this->plugin_constants = $this->plugin_constants();
+        $this->plugin_constants;
         register_activation_hook(__FILE__, [$this, 'activate']);
         register_deactivation_hook(__FILE__, [$this, 'deactivate']);
         add_action('plugins_loaded', [$this, 'init']);

@@ -148,9 +148,9 @@ class Frontend
         global $wpdb;
         global $current_user;
         $votes_table = $wpdb->prefix.WPFRB_request_votes;
+        $comments_table = $wpdb->prefix.WPFRB_request_comments;
 
         if(is_user_logged_in() && $current_user->roles[0] == 'administrator') {
-
             $is_administrator = 'administrator';
         } else {
             $is_administrator = '';
@@ -176,6 +176,8 @@ class Frontend
         }
 
         $checkUserVoted = $wpdb->get_results("SELECT * FROM $votes_table WHERE request_id=$item->id AND user=$current_user->ID");
+        $votes_count  = count($wpdb->get_results("SELECT * FROM $votes_table WHERE request_id=$item->id"));
+        $comments_count  = count($wpdb->get_results("SELECT * FROM $comments_table WHERE request_id=$item->id"));
         $c .= '<div class="wpfrb-request-item'.esc_attr($is_current_user_loggedin). ' '.esc_attr($is_administrator).'" data-name="'.esc_attr($item->title).'">';
 
             if($item->author == $current_user->ID ) {
@@ -195,10 +197,10 @@ class Frontend
                 $notLoggedin = ' id="wpfrb-login-register-popup" ';
                 $disabled = '';
             }
-                $c .= '<div '.$notLoggedin.' class="wpfrb-request-vote '.esc_attr($disabled).'" data-postid="'.esc_attr($item->id).'">';
+                $c .= '<div '.$notLoggedin.' class="wpfrb-request-vote '.esc_attr($disabled).'" data-req-id="'.esc_attr($item->id).'">';
                     $c .= '<span class="wpfrb-request-vote-btn"></span>';
-                    
-                    $c .= '<input type="text" value="'.esc_attr('0').'" class="wpfrb-request-vote-count" readonly/>';
+
+                    $c .= '<input type="text" value="'.esc_attr("$votes_count").'" class="wpfrb-request-vote-count" readonly/>';
                 $c .= '</div>';
             $c .= '<div class="wpfrb-request-content">';
                 $c .= '<h3>';
@@ -208,11 +210,15 @@ class Frontend
                     $c .= '<p class="status"><span class="'.esc_attr($status).'">'.esc_html($status_text).'</span></p>';
                 }
                 $c .= '<p class="description">'.esc_html($item->description).'</p>';
-
+                if($item->logo){
+                    $c.='<div class="req-log-wraper">';
+                        $c.= '<img src="'.esc_url($item->logo).'">';
+                    $c.='</div>';
+                }
             $c .= '</div>';
             $c .= '<div class="wpfrb-request-comment-count">';
                 $c .= '<span class="comment-icon"></span>';
-                $c .= '<span class="comment-number" data-comments="'.esc_attr('0').'">'.esc_html('0').'</span>';
+                $c .= '<span class="comment-number" data-comments="'.esc_attr('0').'">'.esc_html("$comments_count").'</span>';
             $c .= '</div>';
         $c .= '</div>';
 

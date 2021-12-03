@@ -27,4 +27,7 @@ class FeatureBoardModel
     public function wpfrb_get_all_board(){
         return $this->_wpdb->get_results("SELECT * FROM $this->table",ARRAY_A);
     }
+    public  function wpfrb_update_board_sort_by($data, $where){
+        return $this->_wpdb->update( $this->table, $data, $where );
+    }
 }

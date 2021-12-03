@@ -217,4 +217,60 @@
         })
     })
 
+    // handle board filter by
+    $('#wpfrb-req-select-id').change(function (){
+        const sort_by = $(this).val();
+        const board_id = $(this).attr('data-id');
+
+        $.ajax({
+            type:'POST',
+            url: ajax_obj.ajaxurl,
+            data: {
+                nonce : ajax_obj.nonce,
+                action:'wpfrb_update_board_sort_by',
+                sort_by,
+                board_id
+            },
+            success(res){
+                if(res.success){
+                    window.location.reload();
+                }
+            },
+            error({responseJSON:{data}},_, err){
+                const errors = data;
+                alert(errors['board_id'])
+            }
+        })
+
+    })
+
+    // handle add vote and remove vote
+    $('.wpfrb-request-vote').click(function (){
+        const request_id = $(this).attr('data-req-id');
+        let add_vote = $(this).hasClass('addVote');
+        const that = this;
+        $.ajax({
+            type:'POST',
+            url: ajax_obj.ajaxurl,
+            data:{
+                nonce: ajax_obj.nonce,
+                action:'wpfrb_req_vote_handle',
+                request_id,
+                add_vote
+            },
+            success(res){
+                if(res.success){
+                    $(that).toggleClass('removeVote')
+                    $(that).toggleClass('addVote')
+                    let input = $(that).children('input');
+                    if(add_vote){
+                        input.val(Number(input.val()) + 1)
+                    }else{
+                        input.val(Number(input.val()) - 1)
+                    }
+                }
+            }
+        })
+    })
+
 })(jQuery)

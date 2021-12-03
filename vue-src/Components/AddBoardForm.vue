@@ -105,7 +105,7 @@ export default {
             setTimeout(() => {
                 $.ajax({
                     type: "POST",
-                    url: ajax_url.ajaxurl,
+                    url: ajax_obj.ajaxurl,
                     dataType: 'json',
                     data: {
                         action: "wpfrb_create_feature_board",

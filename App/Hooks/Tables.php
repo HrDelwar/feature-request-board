@@ -62,8 +62,8 @@ class Tables
     ) $charset_collate";
 
      // comments reply  table
-     $wpfrb_request_commetn_reply_table = $wpdb->prefix. WPFRB_request_comment_reply;
-     $sql_request_comment_reply ="CREATE TABLE IF NOT EXISTS $wpfrb_request_commetn_reply_table (
+     $wpfrb_request_comment_reply_table = $wpdb->prefix. WPFRB_request_comment_reply;
+     $sql_request_comment_reply ="CREATE TABLE IF NOT EXISTS $wpfrb_request_comment_reply_table (
        id INT NOT NULL AUTO_INCREMENT,
        user BIGINT(20) unsigned,
        comment_id INT NOT NULL,
