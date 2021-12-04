@@ -273,4 +273,9 @@
         })
     })
 
+    // handle comment hide show button
+    $('.wpfrb-request-comment-count').click(function (){
+        const req_id = $(this).attr('data-req-id');
+        $(`.wpfrb-comment-details.${req_id}`).toggle()
+    })
 })(jQuery)

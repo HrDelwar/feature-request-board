@@ -148,6 +148,7 @@ class Frontend
         global $wpdb;
         global $current_user;
         $votes_table = $wpdb->prefix.WPFRB_request_votes;
+        $user_table = $wpdb->prefix.'users';
         $comments_table = $wpdb->prefix.WPFRB_request_comments;
 
         if(is_user_logged_in() && $current_user->roles[0] == 'administrator') {
@@ -156,9 +157,17 @@ class Frontend
             $is_administrator = '';
         }
 
+        $comments = array();
+        if($item->comments){
+            $comments = $wpdb->get_results("SELECT c.id,text, u.user_url as user_logo, u.display_name as user_name FROM $comments_table as c
+LEFT JOIN 
+	(SELECT *  FROM $user_table) as u
+ON c.user = u.ID
+WHERE c.request_id = ".$item->id);
+        }
+
         $c=null;
 
-        $user_info = get_userdata($item->author);
         $status = strtolower(str_replace(' ', '-', $item->status));
         if($item->status == 'inprogress') {
             $status_text = __("In Progress", "wpfrb");
@@ -176,8 +185,7 @@ class Frontend
         }
 
         $checkUserVoted = $wpdb->get_results("SELECT * FROM $votes_table WHERE request_id=$item->id AND user=$current_user->ID");
-        $votes_count  = count($wpdb->get_results("SELECT * FROM $votes_table WHERE request_id=$item->id"));
-        $comments_count  = count($wpdb->get_results("SELECT * FROM $comments_table WHERE request_id=$item->id"));
+
         $c .= '<div class="wpfrb-request-item'.esc_attr($is_current_user_loggedin). ' '.esc_attr($is_administrator).'" data-name="'.esc_attr($item->title).'">';
 
             if($item->author == $current_user->ID ) {
@@ -200,7 +208,7 @@ class Frontend
                 $c .= '<div '.$notLoggedin.' class="wpfrb-request-vote '.esc_attr($disabled).'" data-req-id="'.esc_attr($item->id).'">';
                     $c .= '<span class="wpfrb-request-vote-btn"></span>';
 
-                    $c .= '<input type="text" value="'.esc_attr("$votes_count").'" class="wpfrb-request-vote-count" readonly/>';
+                    $c .= '<input type="text" value="'.esc_attr("$item->votes").'" class="wpfrb-request-vote-count" readonly/>';
                 $c .= '</div>';
             $c .= '<div class="wpfrb-request-content">';
                 $c .= '<h3>';
@@ -215,13 +223,39 @@ class Frontend
                         $c.= '<img src="'.esc_url($item->logo).'">';
                     $c.='</div>';
                 }
+
+                // comments show
+                    $c .= '<div class="wpfrb-comment-details ' . $item->id . '">';
+                        if(count($comments) > 0) {
+                            foreach ($comments as $comment) {
+                                $c .= '<div class="wpfrb-comment-wraper">';
+                                $c .= '<div class="comment-user">';
+                                $c .= '<div class="comment-user-logo">';
+                                $c .= '<img src="' . esc_url($comment->user_logo) . '">';
+                                $c .= '</div>';
+                                $c .= '<span>' . esc_html__($comment->user_name, 'wpfrb') . '</span>';
+                                $c .= '</div>';
+                                $c .= '<p>' . esc_html__($comment->text, 'wpfrb') . '</p>';
+                                $c .= '</div>';
+                            }
+                        }
+                        $c.='<button class="btn">'.esc_html__('Add Comment', 'wpfrb').'</button>';
+                    $c .= '</div>';
+
             $c .= '</div>';
-            $c .= '<div class="wpfrb-request-comment-count">';
+            $c .= '<div class="wpfrb-request-comment-count" data-req-id="'.$item->id.'">';
                 $c .= '<span class="comment-icon"></span>';
-                $c .= '<span class="comment-number" data-comments="'.esc_attr('0').'">'.esc_html("$comments_count").'</span>';
+                $c .= '<span class="comment-number" data-comments="'.esc_attr($item->comments).'">'.esc_html("$item->comments").'</span>';
             $c .= '</div>';
         $c .= '</div>';
+        return $c;
+    }
 
+    public  function wpfrb_request_comment($req_id):string{
+        $c = null;
+        $c .= '<form id="">';
+
+        $c .= "</form>";
         return $c;
     }
 }

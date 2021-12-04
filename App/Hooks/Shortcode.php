@@ -36,26 +36,29 @@ class Shortcode
 
 
             // sort by request
-            $sql = '';
+            $order_by = '';
             if ($board->sort_by == 'alphabetical') {
-                $sql = "SELECT * FROM $list_table WHERE board_id=" . $wpfrb_atts['id'] . " ORDER BY title";
+                $order_by = "title";
             } else if ($board->sort_by == 'comments') {
-                $sql = "SELECT l.* FROM $list_table as l LEFT JOIN $comment_table as c ON l.id = c.request_id 
-WHERE l.board_id = " . $wpfrb_atts['id'] . "
-GROUP BY l.id ORDER BY COUNT(c.request_id) DESC";
+                $order_by = "comments DESC";
             } else if ($board->sort_by == 'votes') {
-                $sql = "SELECT l.* FROM $list_table as l LEFT JOIN $votes_table as v ON l.id = v.request_id 
-WHERE l.board_id = " . $wpfrb_atts['id'] . "
-GROUP BY l.id ORDER BY COUNT(v.request_id) DESC";
+                $order_by = "votes DESC";
             } else if ($board->sort_by == 'random') {
-                $sql = "SELECT * FROM wp_wpfrb_frb_request_lists as l
-WHERE l.board_id = 1 ORDER BY RAND()";
+                $order_by = "RAND()";
             } else {
-                $sql = "";
+                $order_by = "";
             }
 
             $all_req = $wpdb->get_results(
-                $sql
+                "SELECT l.*, COALESCE(comments,0) as comments, COALESCE(votes, 0) as votes FROM wp_wpfrb_frb_request_lists as l
+LEFT JOIN 
+	(SELECT * , COUNT(request_id) as comments FROM wp_wpfrb_request_comments GROUP BY request_id) as c
+ON l.id = c.request_id
+LEFT JOIN 
+	(SELECT * , COUNT(user) as votes FROM wp_wpfrb_request_votes GROUP BY request_id) as v
+ON l.id = v.request_id
+WHERE l.board_id = ".$wpfrb_atts['id']."
+ORDER BY $order_by"
             );
 
 
