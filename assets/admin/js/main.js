@@ -27437,7 +27437,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     function sortRequestsCallback() {
       $.ajax({
         type: 'POST',
-        url: ajax_url.ajaxurl,
+        url: ajax_obj.ajaxurl,
         dataType: 'json',
         data: {
           action: 'wpfrb_all_request_by_board_id',

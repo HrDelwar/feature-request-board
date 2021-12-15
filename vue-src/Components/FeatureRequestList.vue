@@ -58,7 +58,7 @@ export default {
         function sortRequestsCallback() {
             $.ajax({
                 type: 'POST',
-                url: ajax_url.ajaxurl,
+                url: ajax_obj.ajaxurl,
                 dataType: 'json',
                 data: {
                     action: 'wpfrb_all_request_by_board_id',
